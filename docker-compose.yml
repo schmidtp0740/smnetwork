@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  goapp:
+    container_name: goapp
+    build: .
+    command: /go/bin/realize start --run --no-config
+    volumes:
+     - ".:/go/src/app"
+    ports:
+     - "8080:8080"
