@@ -5,6 +5,7 @@ curl -X POST http://localhost:8080/api/signup -H "Content-Type: application/json
 echo ""
 curl -X POST http://localhost:8080/api/newRelationship -H "Content-Type: application/json" -d '{"personID": 1, "friendID": 2}'
 echo ""
+curl -X POST http://localhost:8080/api/login -H "Content-Type: application/json" -d '{"id": 1, "password": "abc"}'
 
 
 

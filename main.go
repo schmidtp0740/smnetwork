@@ -53,6 +53,26 @@ func login(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	credentials := genericInterface.(map[string]interface{})
+	var response []byte
+	personID := int(credentials["id"].(float64))
+	if person, found := peopleDatabase[personID]; found {
+		if person.Password == credentials["password"].(string) {
+			response = []byte(`{"response": "successful"}`)
+		} else {
+			response = []byte(`{"response": "unsuccessful"}`)
+		}
+	} else {
+		response = []byte(`{"response": "unsuccessful"}`)
+	}
+
+	// Declare response header as application/json
+	w.Header().Set("Content-Type", "application/json")
+	// Declare response status as 200
+	w.WriteHeader(http.StatusOK)
+	// Send response with person JSON object
+	w.Write(response)
+
 }
 
 // newuser add a new person
