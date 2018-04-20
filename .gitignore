@@ -16,3 +16,5 @@
 .realize.yaml
 
 debug
+
+**/.wercker/**

@@ -1,0 +1,31 @@
+box:
+  id: golang
+  ports:
+    - "8080"
+  
+dev:
+  steps:
+    - wercker/setup-go-workspace:
+      package-dir: github.com/schmidtp0740/smnetwork
+    - internal/watch:
+      code: |
+        go get
+        go build -o app
+        ./app
+      ports: "8080"
+      reload: true
+    
+build:
+  steps:
+    - wercker/setup-go-workspace:
+      package-dir: github.com/schmidtp0740/smnetwork
+    - wercker/golint
+    - script:
+      name: go build
+      code: |
+        go get
+        go build -o app
+    - script:
+      name: go test
+      code: |
+        go test

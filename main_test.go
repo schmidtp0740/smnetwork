@@ -1,8 +1,7 @@
-package main_test
+package main
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,17 +11,21 @@ import (
 
 func TestNewUser(t *testing.T) {
 	message := []byte(`{
-		"id": 123,
-		"firstName": "John",
-		"lastName": "Doe",
+		"id": 2, 
+		"firstName": "Mary", 
+		"lastName": "Jane", 
+		"password": "abc", 
 		"dob": 1523985843719
-	}`)
-	req, _ := http.NewRequest("POST", "/newUser", bytes.NewBuffer(message))
+		}`)
+	request, err := http.NewRequest("POST", "/newUser", bytes.NewBuffer(message))
+	if err != nil {
+		panic(err)
+	}
 	response := httptest.NewRecorder()
-	mux.NewRouter().ServeHTTP(response, req)
 
+	newUser(response, request)
 	checkResponseCode(t, http.StatusOK, response.Code)
-	checkResponseBody(t, response)
+	checkResponseBody(t, response, `{"id":2,"password":"abc","firstName":"Mary","lastName":"Jane","dob":1523985843719}`)
 
 }
 
@@ -40,11 +43,10 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 	}
 }
 
-func checkResponseBody(t *testing.T, response *httptest.ResponseRecorder) {
+func checkResponseBody(t *testing.T, response *httptest.ResponseRecorder, actualBody string) {
 	body := response.Body.String()
-	if body == `{"id": 123, firstName": "John","lastName": "Doe",	"dob": 1523985843719}` {
-		t.Errorf("Received an empty array. Got %s", body)
+	if body != actualBody {
+		t.Errorf("Expected %s. Got %s", actualBody, body)
 
 	}
-	fmt.Println(response.Body.String())
 }
