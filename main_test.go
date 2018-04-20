@@ -2,14 +2,14 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/gorilla/mux"
 )
 
 func TestNewUser(t *testing.T) {
+	fmt.Println("Testing New User")
 	message := []byte(`{
 		"id": 2, 
 		"firstName": "Mary", 
@@ -17,10 +17,7 @@ func TestNewUser(t *testing.T) {
 		"password": "abc", 
 		"dob": 1523985843719
 		}`)
-	request, err := http.NewRequest("POST", "/newUser", bytes.NewBuffer(message))
-	if err != nil {
-		panic(err)
-	}
+	request, _ := http.NewRequest("POST", "/newUser", bytes.NewBuffer(message))
 	response := httptest.NewRecorder()
 
 	newUser(response, request)
@@ -29,12 +26,16 @@ func TestNewUser(t *testing.T) {
 
 }
 
-func executeRequest(req *http.Request) *httptest.ResponseRecorder {
-	rr := httptest.NewRecorder()
-	router := mux.NewRouter()
-	router.ServeHTTP(rr, req)
+func TestLogin(t *testing.T) {
+	fmt.Println("Testing Login")
+	message := []byte(`{"id": 2, "password": "abc"}`)
+	request, _ := http.NewRequest("POST", "/newUser", bytes.NewBuffer(message))
+	response := httptest.NewRecorder()
 
-	return rr
+	login(response, request)
+	checkResponseCode(t, http.StatusOK, response.Code)
+	checkResponseBody(t, response, `{"response": "successful"}`)
+
 }
 
 func checkResponseCode(t *testing.T, expected, actual int) {
