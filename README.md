@@ -4,8 +4,4 @@
 
 ## Prereqs
 
-<<<<<<< HEAD
 ## Setup
-=======
-## Setup
->>>>>>> 3629feab22f98ca61e3a9b556df7e948468dedb6
