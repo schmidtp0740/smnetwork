@@ -55,7 +55,7 @@ docker-push:
 deploy:
   box:
     id: golang
-s
+
   steps:
 
     - script:
