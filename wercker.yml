@@ -6,7 +6,7 @@ box:
 dev:
   steps:
     - wercker/setup-go-workspace:
-      package-dir: github.com/schmidtp0740/smnetwork
+      package-dir: github.com/schmidtp0740/smnetwork_backend
     - internal/watch:
       code: |
         go get
@@ -18,7 +18,7 @@ dev:
 build:
   steps:
     - wercker/setup-go-workspace:
-      package-dir: github.com/schmidtp0740/smnetwork
+      package-dir: github.com/schmidtp0740/smnetwork_backend
     - wercker/golint
     - script:
       name: go build
@@ -37,12 +37,14 @@ build:
         cp -a ./kubernetes "$WERCKER_OUTPUT_DIR"
 
 docker-push:
-
   box:
     id: golang
-
   steps:
-
+    - script:
+      name: copy binaries to /opt/source
+      code: |
+        mkdir -p /opt
+        cp ${WERCKER_ROOT} /opt/source
     - script:
         name: echo docker tag
         code: |
@@ -56,6 +58,7 @@ docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        entrypoint: /opt/source
         ports: "8080"
 
 deploy:
