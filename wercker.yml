@@ -50,12 +50,12 @@ docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
-        port: 8080/tcp
+        ports: "8080"
 
 deploy:
   box:
     id: golang
-
+s
   steps:
 
     - script:
