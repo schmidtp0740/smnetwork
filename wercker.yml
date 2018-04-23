@@ -48,8 +48,8 @@ docker-push:
         ls ${WERCKER_ROOT}
         echo "source_dir"
         ls ${WERCKER_SOURCE_DIR}
-        mkdir -p /opt
-        cp -r ${WERCKER_ROOT} /opt/source
+        mkdir -p /go/src/github.com/schmidtp0740/smnetwork_backend
+        cp -r ${WERCKER_ROOT} /go/src/github.com/schmidtp0740/smnetwork_backend
     - script:
         name: echo docker tag
         code: |
@@ -63,7 +63,7 @@ docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
-        entrypoint: /opt/source
+        entrypoint: /go/src/github.com/schmidtp0740/smnetwork_backend
         ports: "8080"
 
 deploy:
