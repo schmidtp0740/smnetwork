@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: smnetwork-deployment
+spec:
+  selector:
+    matchLabels: 
+      app: smnetwork
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smnetwork
+    spec:
+      containers:
+      - name: backend
+        image: schmidtp0740/smnetwork_backend${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

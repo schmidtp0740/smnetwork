@@ -29,3 +29,50 @@ build:
       name: go test
       code: |
         go test
+
+docker-push:
+
+  box:
+    id: golang
+
+  steps:
+
+    - script:
+        name: echo docker tag
+        code: |
+          echo "DOCKER IMAGE:TAG"
+          echo "hub.docker.com/schmidtp0740/smnetwork_backend:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}"
+    # Pushing to a docker hub repository
+    # For other docker repository refer to this doc: http://devcenter.wercker.com/docs/containers/pushing-containers
+    - internal/docker-push:
+        repository: schmidtp0740/smnetwork_backend
+        registry: https://registry.hub.docker.com
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+        tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        port: 8080/tcp
+
+deploy:
+  box:
+    id: golang
+
+  steps:
+
+    - script:
+        name: debug
+        code: |
+          echo $WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+          echo $WERCKER_ROOT
+          ls -l $WERCKER_ROOT
+    - script:
+        name: debug
+        cwd: $WERCKER_ROOT/kubernetes/deployment
+        code: |
+          ls -l
+    - script:
+        name: echo tags
+        code: |
+          cat $WERCKER_ROOT/kubernetes/deployment/deployment.yaml
+          echo "Docker image and tag:"
+          echo "${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}"
