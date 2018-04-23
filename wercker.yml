@@ -40,6 +40,8 @@ docker-push:
   box:
     id: golang
   steps:
+    - wercker/setup-go-workspace:
+      package-dir: github.com/schmidtp0740/smnetwork_backend
     - script:
       name: copy binaries to /opt/source
       code: |
