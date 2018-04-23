@@ -49,7 +49,7 @@ docker-push:
         echo "source_dir"
         ls ${WERCKER_SOURCE_DIR}
         mkdir -p /opt
-        cp ${WERCKER_ROOT}/source /opt/source
+        cp -r ${WERCKER_ROOT} /opt/source
     - script:
         name: echo docker tag
         code: |
