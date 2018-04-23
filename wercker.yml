@@ -63,7 +63,6 @@ docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
-        entrypoint: /go/src/github.com/schmidtp0740/smnetwork_backend
         ports: "8080"
 
 deploy:
