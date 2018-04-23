@@ -67,6 +67,13 @@ deploy:
     id: golang
 
   steps:
+    - script:
+        name: debug
+        code: |
+          echo $WERCKER_OUTPUT_DIR
+          ls -l $WERCKER_OUTPUT_DIR
+          echo $WERCKER_ROOT
+          ls -l $WERCKER_ROOT
     - bash-template:
         cwd: $WERCKER_ROOT/kubernetes
     - script:
