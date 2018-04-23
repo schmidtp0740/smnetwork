@@ -34,7 +34,7 @@ build:
       code: |
         ls -l
         cp app ${WERCKER_OUTPUT_DIR}
-        cp -a ./kubernetes ${WERCKER_OUTPUT_DIR}/kubnernetes
+        cp -a ./kubernetes ${WERCKER_OUTPUT_DIR}/kubernetes
 
 docker-push:
   box:
