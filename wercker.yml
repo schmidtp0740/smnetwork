@@ -33,18 +33,21 @@ build:
       name: copy artifacts to output folder
       code: |
         ls -l
-        cp app "$WERCKER_OUTPUT_DIR"
-        cp -a ./kubernetes "$WERCKER_OUTPUT_DIR"
+        cp app ${WERCKER_OUTPUT_DIR}
+        cp -a ./kubernetes ${WERCKER_OUTPUT_DIR}/kubnernetes
 
 docker-push:
   box:
     id: golang
   steps:
-    - wercker/setup-go-workspace:
-      package-dir: github.com/schmidtp0740/smnetwork_backend
+
     - script:
       name: copy binaries to /opt/source
       code: |
+        echo "root"
+        ls ${WERCKER_ROOT}
+        echo "source_dir"
+        ls ${WERCKER_SOURCE_DIR}
         mkdir -p /opt
         cp ${WERCKER_ROOT}/source /opt/source
     - script:
