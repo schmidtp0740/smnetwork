@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: schmidtp0740/smnetwork_backend${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        image: schmidtp0740/smnetwork_backend:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

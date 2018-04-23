@@ -44,10 +44,6 @@ docker-push:
     - script:
       name: copy binaries to /opt/source
       code: |
-        echo "root"
-        ls ${WERCKER_ROOT}
-        echo "source_dir"
-        ls ${WERCKER_SOURCE_DIR}
         mkdir -p /go/src/github.com/schmidtp0740/smnetwork_backend
         cp -r ${WERCKER_ROOT} /go/src/github.com/schmidtp0740/smnetwork_backend
     - script:
@@ -71,22 +67,17 @@ deploy:
     id: golang
 
   steps:
-
+    - bash-template:
+        cwd: $WERCKER_ROOT/kubernetes
     - script:
-        name: debug
+        name: Remove template files
+        cwd: $WERCKER_ROOT/kubernetes
         code: |
-          echo $WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
-          echo $WERCKER_ROOT
-          ls -l $WERCKER_ROOT
-    - script:
-        name: debug
-        cwd: $WERCKER_ROOT/kubernetes/deployment
-        code: |
-          ls -l
-    - script:
-        name: echo tags
-        code: |
-          cat $WERCKER_ROOT/kubernetes/deployment/deployment.yaml
-          echo "Docker image and tag:"
-          echo "${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}"
+          rm *.template.yaml
+    - kubectl:
+        cwd: $WERCKER_ROOT/kubernetes
+        server: ${KUBE_ENDPOINT}
+        client-certificate: ${KUBE_CLIENT_CERTIFICATE}
+        client-key: ${KUBE_CLIENT_KEY}
+        insecure-skip-tls-verify: true
+        command: apply -f .
