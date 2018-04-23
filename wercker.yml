@@ -29,6 +29,12 @@ build:
       name: go test
       code: |
         go test
+    - script:
+      name: copy artifacts to output folder
+      code: |
+        ls -l
+        cp app "$WERCKER_OUTPUT_DIR"
+        cp -a ./kubernetes "$WERCKER_OUTPUT_DIR"
 
 docker-push:
 
