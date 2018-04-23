@@ -46,7 +46,7 @@ docker-push:
     # For other docker repository refer to this doc: http://devcenter.wercker.com/docs/containers/pushing-containers
     - internal/docker-push:
         repository: schmidtp0740/smnetwork_backend
-        registry: https://registry.hub.docker.com
+        registry: https://registry.hub.docker.com/v2
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
         tag: ${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
