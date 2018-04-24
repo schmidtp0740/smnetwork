@@ -81,16 +81,13 @@ deploy:
         cwd: $WERCKER_ROOT/kubernetes
         code: |
           rm *.template.yaml
-
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
-        username: ${KUBE_USERNAME}
-        password: ${KUBE_PASSWORD}
+        token: ${KUBE_TOKEN}
         insecure-skip-tls-verify: true
-
         command: create -f .
     - script:
         name: cleanup
         cwd: $WERCKER_ROOT/kubernetes
-        code: rm -rf *.pem deployment.yaml
+        code: rm -rf deployment.yaml
