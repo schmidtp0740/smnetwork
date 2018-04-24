@@ -101,7 +101,7 @@ deploy:
         client-certificate: admin.pem
         client-key: admin-key.pem
         insecure-skip-tls-verify: true
-        command: create -f deployment.yaml
+        command: create -f .
     - script:
         name: cleanup
         cwd: $WERCKER_ROOT/kubernetes
