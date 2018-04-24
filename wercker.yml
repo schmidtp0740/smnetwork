@@ -81,25 +81,12 @@ deploy:
         cwd: $WERCKER_ROOT/kubernetes
         code: |
           rm *.template.yaml
-    - create-file:
-        name: Create certificate.pem
-        cwd: $WERCKER_ROOT/kubernetes
-        filename: certificate.pem
-        content: $KUBE_CLIENT_CERTIFICATE
-    - create-file:
-        name: Create certificate-key.pem
-        cwd: $WERCKER_ROOT/kubernetes
-        filename: certificate-key.pem
-        content: $KUBE_CLIENT_KEY
-    - script:
-        name: debug
-        cwd: $WERCKER_ROOT/kubernetes
-        code: cat certificate-key.pem
+
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
-        client-certificate: certificate.pem
-        client-key: certificate-key.pem
+        username: ${KUBE_USERNAME}
+        password: ${KUBE_PASSWORD}
         insecure-skip-tls-verify: true
         command: apply -f .
     - script:
