@@ -91,9 +91,9 @@ deploy:
         content: base64encode($ADMIN_KEY_PE)
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
-        server: ${KUBE_ENDPOINT}
-        client-certificate: admin.pem
-        client-key: admin-key.pem
+        server: $KUBE_ENDPOINT
+        username: $KUBE_ADMIN
+        password: $KUBE_PASSWORD
         insecure-skip-tls-verify: true
         command: create -f .
     - script:
