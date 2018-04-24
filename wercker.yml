@@ -98,7 +98,7 @@ deploy:
         client-key: certificate-key.pem
         insecure-skip-tls-verify: true
         command: apply -f .
-    -script:
+    - script:
         name: cleanup
         cwd: $WERCKER_ROOT/kubernetes
         code: rm -rf *.pem deployment.yaml
