@@ -70,8 +70,6 @@ deploy:
     - script:
         name: debug
         code: |
-          echo $WERCKER_OUTPUT_DIR
-          ls -l $WERCKER_OUTPUT_DIR
           echo $WERCKER_ROOT
           ls -l $WERCKER_ROOT
     - bash-template:
@@ -81,13 +79,24 @@ deploy:
         cwd: $WERCKER_ROOT/kubernetes
         code: |
           rm *.template.yaml
+    - create-file:
+        name: Create admin.pem
+        cwd: $WERCKER_ROOT/kubernetes
+        filename: admin.pem
+        content: $ADMIN_PEM
+    - create-file:
+        name: Create admin-key.pem
+        cwd: $WERCKER_ROOT/kubernetes
+        filename: admin-key.pem
+        content: $ADMIN_KEY_PE
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
-        token: ${KUBE_TOKEN}
+        client-certificate: admin.pem
+        client-key: admin-key.pem
         insecure-skip-tls-verify: true
         command: create -f .
     - script:
         name: cleanup
         cwd: $WERCKER_ROOT/kubernetes
-        code: rm -rf deployment.yaml
+        code: rm -rf *.pem deployment.yaml
