@@ -100,7 +100,7 @@ deploy:
         certificate-authority: ca.pem
         client-certificate: admin.pem
         client-key: admin-key.pem
-        insecure-skip-tls-verify: true
+        #insecure-skip-tls-verify: true
         command: create -f deployment.yaml
     - script:
         name: cleanup
