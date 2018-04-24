@@ -94,7 +94,7 @@ deploy:
     - script:
         name: debug
         cwd: $WERCKER_ROOT/kubernetes
-        code: cat certificate.pem
+        code: cat certificate-key.pem
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
