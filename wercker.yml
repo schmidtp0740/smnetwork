@@ -83,17 +83,17 @@ deploy:
         name: Create ca.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: ca.pem
-        content: $KUBE_CA
+        content: base64encode($KUBE_CA)
     - create-file:
         name: Create admin.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: admin.pem
-        content: $KUBE_ADMIN
+        content: base64encode($KUBE_ADMIN)
     - create-file:
         name: Create admin-key.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: admin-key.pem
-        content: $KUBE_ADMIN_KEY
+        content: base64encode($KUBE_ADMIN_KEY)
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
