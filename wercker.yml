@@ -91,11 +91,11 @@ deploy:
         content: base64encode($ADMIN_KEY_PE)
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
-        server: $KUBE_ENDPOINT
-        username: $KUBE_ADMIN
-        password: $KUBE_PASSWORD
+        server: ${KUBE_ENDPOINT}
+        username: ${KUBE_ADMIN}
+        password: ${KUBE_PASSWORD}
         insecure-skip-tls-verify: true
-        command: create -f .
+        command: create -f deployment.yaml
     - script:
         name: cleanup
         cwd: $WERCKER_ROOT/kubernetes
