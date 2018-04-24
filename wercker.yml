@@ -83,24 +83,24 @@ deploy:
         name: Create ca.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: ca.pem
-        content: base64encode($KUBE_CA)
+        content: $KUBE_CA
     - create-file:
         name: Create admin.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: admin.pem
-        content: base64encode($KUBE_ADMIN)
+        content: $KUBE_ADMIN
     - create-file:
         name: Create admin-key.pem
         cwd: $WERCKER_ROOT/kubernetes
         filename: admin-key.pem
-        content: base64encode($KUBE_ADMIN_KEY)
+        content: $KUBE_ADMIN_KEY
     - kubectl:
         cwd: $WERCKER_ROOT/kubernetes
         server: ${KUBE_ENDPOINT}
-        certificate-authority: ca.pem
+        #certificate-authority: ca.pem
         client-certificate: admin.pem
         client-key: admin-key.pem
-        #insecure-skip-tls-verify: true
+        insecure-skip-tls-verify: true
         command: create -f deployment.yaml
     - script:
         name: cleanup
